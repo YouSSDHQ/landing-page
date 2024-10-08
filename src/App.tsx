@@ -171,7 +171,8 @@ export default function App() {
             <div className="grid gap-y-5 md:gap-y-2">
               <h1 className="font-axiforma text-3xl md:text-5xl font-bold">
                 Maximize{' '}
-                <span className="text-green-400">Financial Inclusion</span> with
+                <span className="text-green-400">Financial Inclusion</span> On
+                <span className="text-green-400"> Solana</span> with
                 <br />
                 <span
                   className={`block scribble px-2 py-3 ${
@@ -363,14 +364,14 @@ export default function App() {
               <div className="flex justify-center space-x-4">
                 <Button
                   size={'lg'}
-                  className="bg-green-400 text-black hover:bg-green-500 lg:h-14 lg:text-xl lg:px-10"
+                  className="bg-green-400 text-black hover:bg-green-500"
                   onClick={() => setIsJoinWaitlistModalOpen(true)}
                 >
                   Join Waitlist
                 </Button>
                 <a
                   className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black ${buttonVariants(
-                    { variant: 'outline' }
+                    { variant: 'outline', size: 'lg' }
                   )}`}
                   href="https://x.com/use_youssd"
                   target="_blank"
