@@ -1,5 +1,6 @@
 'use client';
 
+import Logo from '@/assets/images/logo.png';
 import AnimatedCard from '@/components/base/AnimatedCard';
 import ScrollAnimationWrapper from '@/components/base/ScrollAnimationWrapper';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -12,8 +13,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { ArrowRight, BarChart2, GithubIcon, Layers, Zap } from 'lucide-react';
+import { Notify } from 'notiflix';
 import { ReactNode, useEffect, useState } from 'react';
-import Logo from '@/assets/images/logo.png';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 
 interface Strategy {
   title: string;
@@ -25,9 +27,12 @@ interface Strategy {
   buttonText: string;
 }
 
-interface Article {
+interface Tweet {
+  id: string;
+}
+
+interface Features {
   title: string;
-  date: string;
   description: string;
 }
 
@@ -77,21 +82,35 @@ export default function App() {
     },
   ];
 
-  const articles: Article[] = [
+  const supportedFeatures: Features[] = [
     {
-      title: 'Article Title 1',
-      date: 'Dec 15, 2023',
-      description: 'Short description of the article goes here...',
+      title: 'Quick Payments',
+      description: 'Send and receive payments with ease using USSD.',
     },
     {
-      title: 'Article Title 2',
-      date: 'Dec 16, 2023',
-      description: 'Another interesting article description...',
+      title: 'Rotary Savings',
+      description:
+        'Join or create decentralized, secure savings groups for community-driven wealth building.',
     },
     {
-      title: 'Article Title 3',
-      date: 'Dec 17, 2023',
-      description: 'Yet another captivating article summary...',
+      title: 'Airtime On/Off Ramping',
+      description: 'Seamlessly convert airtime to funds and vice versa.',
+    },
+    {
+      title: '`Ite` Donations',
+      description: 'Contribute to community funds and earn NFT rewards.',
+    },
+  ];
+
+  const latestTweets: Tweet[] = [
+    {
+      id: '1843548814713729243',
+    },
+    {
+      id: '1843265078642307367',
+    },
+    {
+      id: '1843249962882351245',
     },
   ];
 
@@ -104,6 +123,7 @@ export default function App() {
           <a
             className={buttonVariants({ variant: 'ghost', size: 'icon' })}
             href="https://github.com/YouSSDHQ"
+            target="_blank"
             aria-label="GitHub"
           >
             <GithubIcon className="h-5 w-5 text-gray-400 hover:text-white" />
@@ -111,6 +131,7 @@ export default function App() {
           <a
             className={buttonVariants({ variant: 'ghost', size: 'icon' })}
             href="https://x.com/use_youssd"
+            target="_blank"
             aria-label="X"
           >
             <svg
@@ -136,25 +157,32 @@ export default function App() {
         <ScrollAnimationWrapper prefersReducedMotion={prefersReducedMotion}>
           <section className="container mx-auto max-md:px-5 py-20 text-center">
             <h1 className="font-axiforma text-4xl md:text-6xl font-bold mb-6">
-              Maximize Capital Efficiency with
+              Maximize Financial Inclusion with
               <span className="text-green-400">
                 {' '}
-                Dynamic Liquidity Solutions.
+                Blockchain-Powered USSD Payments.
               </span>
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Optimize your liquidity across multiple protocols and strategies
+              Bringing the power of blockchain to every mobile phone. No
+              internet required.
             </p>
             <div className="flex justify-center space-x-4">
-              <Button className="bg-green-400 text-black hover:bg-green-500">
+              <Button
+                className="bg-green-400 text-black hover:bg-green-500"
+                onClick={() => Notify.info('Coming soon')}
+              >
                 Join Waitlist
               </Button>
-              <Button
-                variant="outline"
-                className="text-green-400 border-green-400 hover:bg-green-400 hover:text-black"
+              <a
+                className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black ${buttonVariants(
+                  { variant: 'outline' }
+                )}`}
+                href="https://x.com/use_youssd"
+                target="_blank"
               >
                 Contact Us
-              </Button>
+              </a>
             </div>
           </section>
         </ScrollAnimationWrapper>
@@ -165,39 +193,33 @@ export default function App() {
             prefersReducedMotion={prefersReducedMotion}
           >
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Supported AMMs</h2>
+              <h2 className="text-3xl font-bold mb-4">What We Offer</h2>
               <p className="text-gray-400">
-                We support various automated market makers to maximize your
-                opportunities
+                We simplify transactions and financial services for everyone,
+                anywhere, with our USSD-based platform:
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <AnimatedCard prefersReducedMotion={prefersReducedMotion}>
-                <Card className="bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-green-400">Quick Swap</CardTitle>
-                    <CardDescription>Decentralized Exchange</CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button variant="outline" className="w-full">
-                      View More <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </AnimatedCard>
-              <AnimatedCard prefersReducedMotion={prefersReducedMotion}>
-                <Card className="bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-green-400">UniSwap</CardTitle>
-                    <CardDescription>Decentralized Protocol</CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button variant="outline" className="w-full">
-                      View More <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </AnimatedCard>
+              {supportedFeatures.map((feature) => (
+                <AnimatedCard
+                  key={feature.title}
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <Card className="h-full bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
+                    <CardHeader>
+                      <CardTitle className="text-green-400">
+                        {feature.title}
+                      </CardTitle>
+                      <CardDescription>{feature.description}</CardDescription>
+                    </CardHeader>
+                    <CardFooter>
+                      <Button variant="outline" className="w-full">
+                        View More <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </AnimatedCard>
+              ))}
             </div>
           </ScrollAnimationWrapper>
         </section>
@@ -206,36 +228,32 @@ export default function App() {
           <section className="container max-md:px-5 mx-auto py-20">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">
-                We reduce the costs of sourcing liquidity.
+                We reduce the barriers to financial inclusion.
               </h2>
               <p className="text-gray-400">
-                Maximize your capital efficiency with our advanced solutions
+                Unlock borderless payments and decentralized savings for every
+                mobile phone user. Low fees, fast transactions, and no internet
+                required.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-4xl font-bold text-green-400 mb-2">
-                  50+
-                </div>
-                <div className="text-gray-400">Strategies Deployed</div>
+                <div className="text-4xl font-bold text-green-400 mb-2">X+</div>
+                <div className="text-gray-400">Transactions Processed</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-green-400 mb-2">X+</div>
+                <div className="text-gray-400">Countries Reached</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-green-400 mb-2">X+</div>
+                <div className="text-gray-400">Mobile Users Accessible</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-green-400 mb-2">
-                  10+
+                  $X Million
                 </div>
-                <div className="text-gray-400">Liquidity Protocols</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-green-400 mb-2">
-                  10+
-                </div>
-                <div className="text-gray-400">Networks</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-green-400 mb-2">
-                  $100M+
-                </div>
-                <div className="text-gray-400">Total Value Locked</div>
+                <div className="text-gray-400">Processed in Transactions</div>
               </div>
             </div>
           </section>
@@ -286,34 +304,28 @@ export default function App() {
         <ScrollAnimationWrapper prefersReducedMotion={prefersReducedMotion}>
           <section className="container mx-auto py-20">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Latest Articles</h2>
+              <h2 className="text-3xl font-bold mb-4">Latest Tweets</h2>
               <p className="text-gray-400">
-                Stay updated with our latest insights and news
+                Stay updated with our latest news and updates from X{' '}
+                <a
+                  target="_blank"
+                  href="https://x.com/use_youssd"
+                  className="text-green-400"
+                >
+                  @use_youssd
+                </a>
+                .
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-md:px-5">
-              {articles.map((article, index) => (
-                <AnimatedCard
-                  key={index}
-                  prefersReducedMotion={prefersReducedMotion}
-                >
-                  <Card className="bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
-                    <CardHeader>
-                      <CardTitle className="text-green-400">
-                        {article.title}
-                      </CardTitle>
-                      <CardDescription>{article.date}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-400">{article.description}</p>
-                    </CardContent>
-                    <CardFooter>
-                      <Button variant="link" className="text-green-400">
-                        Read More <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </AnimatedCard>
+              {latestTweets.map((tweet) => (
+                <TwitterTweetEmbed
+                  key={tweet.id}
+                  onLoad={function noRefCheck() {}}
+                  placeholder="Loading"
+                  tweetId={tweet.id}
+                  options={{ cards: 'hidden' }}
+                />
               ))}
             </div>
           </section>
@@ -327,15 +339,21 @@ export default function App() {
                 Bridging the gap between Web3 and everyday transactions
               </p>
               <div className="flex justify-center space-x-4">
-                <Button className="bg-green-400 text-black hover:bg-green-500">
+                <Button
+                  className="bg-green-400 text-black hover:bg-green-500"
+                  onClick={() => Notify.info('Coming soon')}
+                >
                   Join Waitlist
                 </Button>
-                <Button
-                  variant="outline"
-                  className="text-green-400 border-green-400 hover:bg-green-400 hover:text-black"
+                <a
+                  className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black ${buttonVariants(
+                    { variant: 'outline' }
+                  )}`}
+                  href="https://x.com/use_youssd"
+                  target="_blank"
                 >
                   Contact Us
-                </Button>
+                </a>
               </div>
             </div>
           </section>
