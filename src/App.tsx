@@ -1,7 +1,7 @@
 'use client';
 
-import Logo from '@/assets/images/logo.png';
 import HeroImg from '@/assets/images/hero_img.png';
+import Logo from '@/assets/images/logo.png';
 import AnimatedCard from '@/components/base/AnimatedCard';
 import ScrollAnimationWrapper from '@/components/base/ScrollAnimationWrapper';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -14,9 +14,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { ArrowRight, BarChart2, GithubIcon, Layers, Zap } from 'lucide-react';
-import { Notify } from 'notiflix';
 import { ReactNode, useEffect, useState } from 'react';
 import { Tweet } from 'react-tweet';
+import JoinWaitlistModal from './components/base/JoinWaitlistDialog';
 
 interface Strategy {
   title: string;
@@ -39,6 +39,8 @@ interface Features {
 
 export default function App() {
   const [prefersReducedMotion, setPrefersReducedMotion] =
+    useState<boolean>(false);
+  const [isJoinWaitlistModalOpen, setIsJoinWaitlistModalOpen] =
     useState<boolean>(false);
   const [isDrawn, setIsDrawn] = useState(true);
 
@@ -187,10 +189,11 @@ export default function App() {
                 <Button
                   size={'lg'}
                   className="bg-green-400 text-black hover:bg-green-500 lg:h-14 lg:text-xl lg:px-10"
-                  onClick={() => Notify.info('Coming soon')}
+                  onClick={() => setIsJoinWaitlistModalOpen(true)}
                 >
                   Join Waitlist
                 </Button>
+
                 <a
                   className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black lg:h-14 lg:text-xl lg:px-10 ${buttonVariants(
                     { variant: 'outline', size: 'lg' }
@@ -359,8 +362,9 @@ export default function App() {
               </p>
               <div className="flex justify-center space-x-4">
                 <Button
-                  className="bg-green-400 text-black hover:bg-green-500"
-                  onClick={() => Notify.info('Coming soon')}
+                  size={'lg'}
+                  className="bg-green-400 text-black hover:bg-green-500 lg:h-14 lg:text-xl lg:px-10"
+                  onClick={() => setIsJoinWaitlistModalOpen(true)}
                 >
                   Join Waitlist
                 </Button>
@@ -384,6 +388,11 @@ export default function App() {
           © 2024 YouSSD. All rights reserved.
         </div>
       </footer>
+
+      <JoinWaitlistModal
+        open={isJoinWaitlistModalOpen}
+        onClose={() => setIsJoinWaitlistModalOpen(false)}
+      />
     </div>
   );
 }
