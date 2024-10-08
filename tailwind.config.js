@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        axiforma: '"Axiforma Medium", sans-serif',
+        axiforma: '"Axiforma", sans-serif',
       },
       animation: {
         fadeIn: 'fadeIn 1s ease-out forwards',
