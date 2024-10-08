@@ -1,6 +1,7 @@
 'use client';
 
 import Logo from '@/assets/images/logo.png';
+import HeroImg from '@/assets/images/hero_img.png';
 import AnimatedCard from '@/components/base/AnimatedCard';
 import ScrollAnimationWrapper from '@/components/base/ScrollAnimationWrapper';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -39,6 +40,7 @@ interface Features {
 export default function App() {
   const [prefersReducedMotion, setPrefersReducedMotion] =
     useState<boolean>(false);
+  const [isDrawn, setIsDrawn] = useState(true);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -47,6 +49,14 @@ export default function App() {
     const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIsDrawn((prevState) => !prevState);
+    }, 3000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const strategies: Strategy[] = [
@@ -155,34 +165,49 @@ export default function App() {
 
       <main>
         <ScrollAnimationWrapper prefersReducedMotion={prefersReducedMotion}>
-          <section className="container mx-auto max-md:px-5 py-20 text-center">
-            <h1 className="font-axiforma text-4xl md:text-6xl font-bold mb-6">
-              Maximize Financial Inclusion with
-              <span className="text-green-400">
-                {' '}
-                Blockchain-Powered USSD Payments.
-              </span>
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Bringing the power of blockchain to every mobile phone. No
-              internet required.
-            </p>
-            <div className="flex justify-center space-x-4">
-              <Button
-                className="bg-green-400 text-black hover:bg-green-500"
-                onClick={() => Notify.info('Coming soon')}
-              >
-                Join Waitlist
-              </Button>
-              <a
-                className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black ${buttonVariants(
-                  { variant: 'outline' }
-                )}`}
-                href="https://x.com/use_youssd"
-                target="_blank"
-              >
-                Contact Us
-              </a>
+          <section className="container mx-auto md:grid md:grid-cols-2 w-full max-md:px-5 py-20">
+            <div className="grid gap-y-2">
+              <h1 className="font-axiforma text-3xl md:text-5xl font-bold mb-6">
+                Maximize{' '}
+                <span className="text-green-400">Financial Inclusion</span> with
+                <br />
+                <span
+                  className={`block scribble px-2 py-3 ${
+                    isDrawn ? 'is-drawn' : 'is-undrawn'
+                  }`}
+                >
+                  Blockchain-Powered USSD Payments.
+                </span>
+              </h1>
+              <p className="text-xl text-gray-400 mb-8">
+                Bringing the power of blockchain to every mobile phone. No
+                internet required.
+              </p>
+              <div className="flex justify-center md:justify-start space-x-6">
+                <Button
+                  size={'lg'}
+                  className="bg-green-400 text-black hover:bg-green-500 lg:h-14 lg:text-xl lg:px-10"
+                  onClick={() => Notify.info('Coming soon')}
+                >
+                  Join Waitlist
+                </Button>
+                <a
+                  className={`text-green-400 border-green-400 hover:bg-green-400 hover:text-black lg:h-14 lg:text-xl lg:px-10 ${buttonVariants(
+                    { variant: 'outline', size: 'lg' }
+                  )}`}
+                  href="https://x.com/use_youssd"
+                  target="_blank"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </div>
+            <div className="">
+              <img
+                src={HeroImg}
+                alt="Illustration of USSD"
+                className="max-w-full"
+              />
             </div>
           </section>
         </ScrollAnimationWrapper>
