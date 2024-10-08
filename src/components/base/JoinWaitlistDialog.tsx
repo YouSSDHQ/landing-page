@@ -21,11 +21,18 @@ interface WaitlistModalProps {
 }
 
 const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
-  const [formData, setFormData] = useState({ email: '' });
+  const [formData, setFormData] = useState({ phoneNumber: '' });
   const [isLoading, setIsLoading] = useState(false);
+
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate phone number
+    const isValidPhoneNumber = phoneRegex.test(formData.phoneNumber);
+    if (!isValidPhoneNumber) return Notify.failure('Please enter a valid phone number');
+
     setIsLoading(true);
 
     try {
@@ -66,11 +73,11 @@ const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Input
-            id="email"
-            placeholder="Your email"
-            value={formData.email}
+            id="text"
+            placeholder="Your phone number"
+            value={formData.phoneNumber}
             onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
+              setFormData({ ...formData, phoneNumber: e.target.value })
             }
             className="bg-gray-800 w-full"
           />
