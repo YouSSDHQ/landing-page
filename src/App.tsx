@@ -205,7 +205,7 @@ export default function App() {
                   key={feature.title}
                   prefersReducedMotion={prefersReducedMotion}
                 >
-                  <Card className="h-full bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
+                  <Card className="grid h-full bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
                     <CardHeader>
                       <CardTitle className="text-green-400">
                         {feature.title}
@@ -213,7 +213,7 @@ export default function App() {
                       <CardDescription>{feature.description}</CardDescription>
                     </CardHeader>
                     <CardFooter>
-                      <Button variant="outline" className="w-full">
+                      <Button variant="outline" className="mt-auto w-full">
                         View More <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </CardFooter>
