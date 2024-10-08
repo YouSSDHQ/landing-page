@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { ArrowRight, BarChart2, GithubIcon, Layers, Zap } from 'lucide-react';
 import { ReactNode, useEffect, useState } from 'react';
+import Logo from '@/assets/images/logo.png';
 
 interface Strategy {
   title: string;
@@ -97,7 +98,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-white">
       <header className="max-md:px-5 container mx-auto py-6 flex justify-between items-center">
-        <div className="text-2xl font-bold text-green-400">Logo</div>
+        <img src={Logo} alt="YouSSD Logo" className="h-7 lg:h-10" />
 
         <div className="flex items-center space-x-2">
           <a
