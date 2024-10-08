@@ -26,12 +26,17 @@ const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
 
   const phoneRegex = /^\+?[1-9]\d{1,14}$/;
 
+  const resetForm = () => {
+    setFormData({ phoneNumber: '' });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validate phone number
     const isValidPhoneNumber = phoneRegex.test(formData.phoneNumber);
-    if (!isValidPhoneNumber) return Notify.failure('Please enter a valid phone number');
+    if (!isValidPhoneNumber)
+      return Notify.failure('Please enter a valid phone number');
 
     setIsLoading(true);
 
@@ -49,6 +54,7 @@ const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
       }
 
       onClose();
+      resetForm();
       Notify.success('Thank you for joining our waitlist!');
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
@@ -74,7 +80,7 @@ const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
         <div className="flex items-center gap-2">
           <Input
             id="text"
-            placeholder="Your phone number"
+            placeholder="Your phone number in international format"
             value={formData.phoneNumber}
             onChange={(e) =>
               setFormData({ ...formData, phoneNumber: e.target.value })
