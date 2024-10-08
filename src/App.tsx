@@ -166,8 +166,8 @@ export default function App() {
       <main>
         <ScrollAnimationWrapper prefersReducedMotion={prefersReducedMotion}>
           <section className="container mx-auto md:grid md:grid-cols-2 w-full max-md:px-5 py-20">
-            <div className="grid gap-y-2">
-              <h1 className="font-axiforma text-3xl md:text-5xl font-bold mb-6">
+            <div className="grid gap-y-5 md:gap-y-2">
+              <h1 className="font-axiforma text-3xl md:text-5xl font-bold">
                 Maximize{' '}
                 <span className="text-green-400">Financial Inclusion</span> with
                 <br />
@@ -179,11 +179,11 @@ export default function App() {
                   Blockchain-Powered USSD Payments.
                 </span>
               </h1>
-              <p className="text-xl text-gray-400 mb-8">
+              <p className="text-xl text-gray-400">
                 Bringing the power of blockchain to every mobile phone. No
                 internet required.
               </p>
-              <div className="flex justify-center md:justify-start space-x-6">
+              <div className="mt-auto flex space-x-6">
                 <Button
                   size={'lg'}
                   className="bg-green-400 text-black hover:bg-green-500 lg:h-14 lg:text-xl lg:px-10"
