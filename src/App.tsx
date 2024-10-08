@@ -179,7 +179,7 @@ export default function App() {
                   Blockchain-Powered USSD Payments.
                 </span>
               </h1>
-              <p className="text-xl text-gray-400">
+              <p className="text-xl max-w-[40ch] text-gray-400">
                 Bringing the power of blockchain to every mobile phone. No
                 internet required.
               </p>
@@ -202,11 +202,11 @@ export default function App() {
                 </a>
               </div>
             </div>
-            <div className="">
+            <div className="overflow-hidden">
               <img
                 src={HeroImg}
                 alt="Illustration of USSD"
-                className="max-w-full"
+                className="max-w-[450px]"
               />
             </div>
           </section>
