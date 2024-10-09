@@ -55,7 +55,10 @@ const JoinWaitlistModal: React.FC<WaitlistModalProps> = ({ open, onClose }) => {
 
       onClose();
       resetForm();
-      Notify.success('Thank you for joining our waitlist!');
+      Notify.success(
+        (response.data as { message: string }).message ||
+          'Thank you for joining our waitlist!'
+      );
     } catch (error) {
       console.error('Error submitting to waitlist:', error);
       Notify.failure(
